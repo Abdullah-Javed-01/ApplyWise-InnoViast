@@ -385,11 +385,14 @@ if analyze_button:
             print("=== END APPLYWISE ANALYSIS ERROR ===\n")
 
             with result_column:
-                st.error(
-                    "Something went wrong while analyzing the résumé "
-                    "and job description. Please try again."
-                )
-
-                if DEVELOPER_MODE:
-                    with st.expander("Technical details"):
-                        st.code(str(error))
+                if "Daily AI usage limit reached" in str(error):
+                    st.warning(
+                        "⚠️ Daily AI usage limit reached.\n\n"
+                        "The AI service has temporarily reached its usage quota. "
+                        "Please try again later."
+                    )
+                else:
+                    st.error(
+                        "Something went wrong while analyzing the résumé "
+                        "and job description. Please try again."
+                    )
