@@ -1,0 +1,5 @@
+streamlit==1.60.0
+groq==1.6.0
+python-dotenv==1.2.2
+pypdf==6.14.2
+supabase==2.31.0
