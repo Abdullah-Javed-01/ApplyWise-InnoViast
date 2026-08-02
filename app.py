@@ -378,6 +378,12 @@ if analyze_button:
                 )
 
         except Exception as error:
+            import traceback
+
+            print("\n=== APPLYWISE ANALYSIS ERROR ===")
+            traceback.print_exc()
+            print("=== END APPLYWISE ANALYSIS ERROR ===\n")
+
             with result_column:
                 st.error(
                     "Something went wrong while analyzing the résumé "
