@@ -98,3 +98,31 @@ def calculate_skill_match(candidate_skills, job_skills):
         missing_skills,
         round(score, 2),
     )
+
+def calculate_weighted_skill_score(
+    required_score: float,
+    preferred_score: float,
+    required_skills: list[str],
+    preferred_skills: list[str],
+) -> float:
+    """Calculate the final technical score based on available skill groups."""
+
+    has_required_skills = bool(required_skills)
+    has_preferred_skills = bool(preferred_skills)
+
+    if has_required_skills and has_preferred_skills:
+        final_score = (
+            required_score * 0.80
+            + preferred_score * 0.20
+        )
+
+    elif has_required_skills:
+        final_score = required_score
+
+    elif has_preferred_skills:
+        final_score = preferred_score
+
+    else:
+        final_score = 0.0
+
+    return round(final_score, 1)

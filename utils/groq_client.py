@@ -33,7 +33,7 @@ def ask_groq(prompt: str) -> str:
                     "content": prompt,
                 }
             ],
-            temperature=0.1,
+            temperature=0.0,
         )
 
         content = response.choices[0].message.content

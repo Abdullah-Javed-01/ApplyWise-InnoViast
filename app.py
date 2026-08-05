@@ -6,7 +6,10 @@ from utils.feedback_service import save_feedback
 from utils.groq_client import ask_groq
 from utils.parser import parse_json_response
 from utils.pdf_reader import extract_text_from_pdf
-from utils.scoring import calculate_skill_match
+from utils.scoring import (
+    calculate_skill_match,
+    calculate_weighted_skill_score,
+)
 from utils.ui import (
     display_brand_header,
     display_comparison_card,
@@ -200,17 +203,12 @@ if analyze_button:
                 job_data.get("preferred_skills", []),
             )
 
-            if job_data.get("preferred_skills"):
-                technical_skill_score = round(
-                    (required_score * 0.80)
-                    + (preferred_score * 0.20),
-                    1,
-                )
-            else:
-                technical_skill_score = round(
-                    required_score,
-                    1,
-                )
+            technical_skill_score = calculate_weighted_skill_score(
+                required_score=required_score,
+                preferred_score=preferred_score,
+                required_skills=job_data.get("required_skills", []),
+                preferred_skills=job_data.get("preferred_skills", []),
+            )
 
             matched_skills = remove_duplicate_skills(
                 required_matched + preferred_matched

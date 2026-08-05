@@ -1,22 +1,55 @@
-## Early Repeated-Input Evaluation
+# ApplyWise AI — Evaluation Report
 
-The same résumé and job description were analyzed repeatedly.
+## Scope
 
-### Failure pattern 1
-Exact text comparison incorrectly marked equivalent skills as missing.
+This report documents the evaluation activities completed for ApplyWise AI.
+
+The project currently includes:
+
+- Repeated-input stability testing
+- Ten documented manual functional test scenarios
+- Validation testing for missing and unsupported inputs
+- Screenshot evidence for the manual test scenarios
+
+This is not an automated benchmark of résumé-extraction accuracy, hiring accuracy,
+or employer decision quality.
+
+---
+
+## Repeated-Input Evaluation
+
+The same résumé and job description were analyzed more than once to examine
+consistency.
+
+### Initial issue: equivalent skill wording
+
+Exact text comparison initially treated semantically equivalent skills as
+different.
 
 Example:
-- Résumé: Retrieval-Augmented Generation (RAG)
-- Job: Retrieval Augmented Generation (RAG)
+
+- Résumé: `Retrieval-Augmented Generation (RAG)`
+- Job description: `Retrieval Augmented Generation (RAG)`
 
 ### Improvement
-Added skill normalization, aliases, and controlled evidence rules.
 
-### Failure pattern 2
-The AI extracted different numbers of skills from the same long job description across repeated runs.
+The scoring logic was improved using:
+
+- Skill normalization
+- Skill aliases
+- Controlled evidence rules
+- Deterministic Python comparison
+
+---
+
+### Initial issue: extraction variation
+
+The AI extraction step sometimes returned a different number of skills from the
+same long job description.
 
 ### Improvement
-Set model temperature to 0 and added a final completeness-check instruction to the extraction prompt.
 
-### Result
-The final repeated tests produced weighted skill scores of 48.92% and 48.00%. The small difference confirms that the result should be presented as an estimate rather than an exact hiring prediction.
+The Groq extraction configuration was changed to:
+
+```python
+temperature=0.0
